@@ -248,10 +248,18 @@ class OOXMLFile(base.BaseOfficeFile):
             return False
 
 if __name__ == "__main__":
-    with open('hancom.docx','rb') as document:
-        officefile = OOXMLFile(document)
+    with open('hancom.docx', 'rb') as standard:
+        officefile = OOXMLFile(standard)
         print(officefile.info)
-        print(len(officefile.info['verifier']['encryptedVerifier']))
+        officefile.load_key(password="11111")
+        output = open('hancom_dec.docx', 'wb')
+        officefile.decrypt(output)
+
+    with open('document.docx', 'rb') as agile:
+        officefile = OOXMLFile(agile)
+        officefile.load_key(password="11111")
+        output = open('document_dec.docx', 'wb')
+        print(officefile.info)
         """
         ---agile info---
         keyDataSalt                 - 16byte binary
